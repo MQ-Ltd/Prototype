@@ -1,0 +1,37 @@
+{
+    "chord_name": "D Major",     
+    "master_frets": [1, 2],
+    "index": {
+        "string_number": 3,
+        "fret_percent": -51.47326713263534,
+        "n_samples": 36
+    },
+    "middle": {
+        "string_number": 1,
+        "fret_percent": -18.7127706194409,
+        "n_samples": 34
+    },
+    "ring": {
+        "string_number": 2,
+        "fret_percent": 61.34754138924215,
+        "n_samples": 35
+    },
+    "mm": {
+        "ref_finger": "middle",
+        "avg_rel_dist_norm": 0.785493649160017,
+        "avg_rel_angle_deg": 42.32965245158983,
+        "n_samples": 34
+    },
+    "im": {
+        "ref_finger": "index",
+        "avg_rel_dist_norm": 0.8771673735626487,
+        "avg_rel_angle_deg": 36.803547846885365,
+        "n_samples": 35
+    },
+    "rm": {
+        "ref_finger": "ring",
+        "avg_rel_dist_norm": 0.8869971430880994,
+        "avg_rel_angle_deg": 45.47438768805378,
+        "n_samples": 35
+    }
+}

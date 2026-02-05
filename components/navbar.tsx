@@ -1,0 +1,89 @@
+"use client";
+
+import * as React from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import {
+  NavigationMenu,
+  NavigationMenuList,
+  NavigationMenuItem,
+  NavigationMenuLink,
+} from "@/components/ui/navigation-menu";
+import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
+import { Menu, Music } from "lucide-react";
+
+export function Navbar() {
+  return (
+    <header className="w-full fixed top-0 z-50 bg-black/40 backdrop-blur-lg border-b border-white/10">
+      <div className="max-w-6xl mx-auto h-16 px-6 flex items-center justify-between">
+
+        {/* Brand */}
+        <Link href="/" className="flex items-center gap-1 text-xl font-bold font-brand">
+          <Image 
+            src="/logo.png" 
+            alt="MusiQ Logo" 
+            width={32} 
+            height={32}
+            className="rounded-lg"
+          />
+          <span>Musi<span style={{ color: "#C1e328" }}>Q</span></span>
+        </Link>
+
+        {/* Desktop Navigation */}
+        <div className="hidden md:flex">
+          <NavigationMenu>
+            <NavigationMenuList className="space-x-6">
+              
+              <NavigationMenuItem>
+                <Link href="/audio" className="text-gray-300 hover:text-white transition">
+                  Audio
+                </Link>
+              </NavigationMenuItem>
+
+              <NavigationMenuItem>
+                <Link href="/vision" className="text-gray-300 hover:text-white transition">
+                  Vision
+                </Link>
+              </NavigationMenuItem>
+
+              <NavigationMenuItem>
+                <Link href="/combined" className="text-gray-300 hover:text-white transition">
+                  Combined
+                </Link>
+              </NavigationMenuItem>
+
+            </NavigationMenuList>
+          </NavigationMenu>
+        </div>
+
+        {/* Mobile Menu */}
+        <div className="md:hidden">
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon">
+                <Menu className="h-6 w-6 text-gray-300" />
+              </Button>
+            </SheetTrigger>
+
+            <SheetContent side="right" className="bg-black p-6 w-64 text-white border-l border-white/10">
+              <nav className="flex flex-col space-y-4 mt-6 text-lg">
+                <Link href="/audio" className="hover:text-white/80 transition">
+                  Audio
+                </Link>
+                <Link href="/vision" className="hover:text-white/80 transition">
+                  Vision
+                </Link>
+                <Link href="/combined" className="hover:text-white/80 transition">
+                  Combined
+                </Link>
+              </nav>
+            </SheetContent>
+
+          </Sheet>
+        </div>
+
+      </div>
+    </header>
+  );
+}
