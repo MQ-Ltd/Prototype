@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useAuth } from "@clerk/nextjs";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Navbar } from "@/components/navbar";
 import { 
   Eye,
@@ -53,6 +55,8 @@ interface FretPoint {
 }
 
 export default function VisionPage() {
+  const { isLoaded, userId } = useAuth();
+  const router = useRouter();
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -103,6 +107,12 @@ export default function VisionPage() {
       setDemoScore(scores[index]);
     }, 600);
     return () => clearInterval(interval);
+  }, []);
+
+  // Animate content on mount
+  useEffect(() => {
+    const timer = setTimeout(() => setShowContent(true), 100);
+    return () => clearTimeout(timer);
   }, []);
 
   // Keep refs in sync with state

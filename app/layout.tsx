@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ClerkProvider } from "@clerk/nextjs";
 import "@fontsource/geist-sans";
 import "@fontsource/geist-sans/400.css";
 import "@fontsource/geist-sans/500.css";
@@ -21,10 +22,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className="antialiased">
-        {children}
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en" suppressHydrationWarning>
+        <body className="antialiased bg-black text-white">
+          {children}
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

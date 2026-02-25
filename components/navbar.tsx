@@ -4,14 +4,9 @@ import * as React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import {
-  NavigationMenu,
-  NavigationMenuList,
-  NavigationMenuItem,
-  NavigationMenuLink,
-} from "@/components/ui/navigation-menu";
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
-import { Menu, Music } from "lucide-react";
+import { Menu } from "lucide-react";
+import { SignedIn, UserButton } from "@clerk/nextjs";
 
 export function Navbar() {
   return (
@@ -31,30 +26,20 @@ export function Navbar() {
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex">
-          <NavigationMenu>
-            <NavigationMenuList className="space-x-6">
-              
-              <NavigationMenuItem>
-                <Link href="/audio" className="text-gray-300 hover:text-white transition">
-                  Audio
-                </Link>
-              </NavigationMenuItem>
-
-              <NavigationMenuItem>
-                <Link href="/vision" className="text-gray-300 hover:text-white transition">
-                  Vision
-                </Link>
-              </NavigationMenuItem>
-
-              <NavigationMenuItem>
-                <Link href="/combined" className="text-gray-300 hover:text-white transition">
-                  Combined
-                </Link>
-              </NavigationMenuItem>
-
-            </NavigationMenuList>
-          </NavigationMenu>
+        <div className="hidden md:flex items-center gap-4">
+          <Link href="/login">
+            <Button className="bg-white/10 text-white hover:bg-white/20 font-semibold border border-white/20">
+              Sign in
+            </Button>
+          </Link>
+          <Link href="/signup">
+            <Button className="bg-[#C1e328] text-black hover:bg-[#C1e328]/90 font-semibold">
+              Sign up
+            </Button>
+          </Link>
+          <SignedIn>
+            <UserButton afterSignOutUrl="/" />
+          </SignedIn>
         </div>
 
         {/* Mobile Menu */}
@@ -68,15 +53,19 @@ export function Navbar() {
 
             <SheetContent side="right" className="bg-black p-6 w-64 text-white border-l border-white/10">
               <nav className="flex flex-col space-y-4 mt-6 text-lg">
-                <Link href="/audio" className="hover:text-white/80 transition">
-                  Audio
+                <Link href="/login" className="w-full">
+                  <Button className="w-full bg-white/10 text-white hover:bg-white/20 font-semibold border border-white/20">
+                    Sign in
+                  </Button>
                 </Link>
-                <Link href="/vision" className="hover:text-white/80 transition">
-                  Vision
+                <Link href="/signup" className="w-full">
+                  <Button className="w-full bg-[#C1e328] text-black hover:bg-[#C1e328]/90 font-semibold">
+                    Sign up
+                  </Button>
                 </Link>
-                <Link href="/combined" className="hover:text-white/80 transition">
-                  Combined
-                </Link>
+                <SignedIn>
+                  <UserButton afterSignOutUrl="/" />
+                </SignedIn>
               </nav>
             </SheetContent>
 

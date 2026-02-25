@@ -22,8 +22,8 @@ import { TechMarquee } from "@/components/tech-marquee";
 import { BentoNav } from "@/components/bento-nav";
 import { SiteFooter } from "@/components/site-footer";
 
-// Module-level variable: persists across navigation, resets on refresh
-let hasSeenLoading = false;
+// Track loading screen using sessionStorage instead of module variable
+const LOADING_KEY = "miusq_has_seen_loading";
 
 // Minimal feature item
 function FeatureItem({ 
@@ -65,27 +65,45 @@ export default function Home() {
   const bentoRef = useRef<HTMLSectionElement>(null);
   const { scrollY, scrollYProgress } = useScroll();
   
-  const [isLoading, setIsLoading] = useState(true);
+  // Check sessionStorage immediately to get initial state
+  const [isLoading, setIsLoading] = useState(() => {
+    if (typeof window !== "undefined") {
+      return !sessionStorage.getItem(LOADING_KEY);
+    }
+    return true;
+  });
   const [showContent, setShowContent] = useState(false);
-  const [hasLoadedOnce, setHasLoadedOnce] = useState(false);
+  const [hasLoadedOnce, setHasLoadedOnce] = useState(() => {
+    if (typeof window !== "undefined") {
+      return !!sessionStorage.getItem(LOADING_KEY);
+    }
+    return false;
+  });
   
   // Parallax effects
   const heroOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
   const heroScale = useTransform(scrollYProgress, [0, 0.3], [1, 0.95]);
 
-  // Check module-level variable on mount
+  // Handle loading complete
   useEffect(() => {
-    if (hasSeenLoading) {
-      setIsLoading(false);
+    // If already seen loading, skip directly to content
+    if (hasLoadedOnce && !isLoading) {
       setShowContent(true);
-      setHasLoadedOnce(true);
+      return;
     }
-  }, []);
+
+    // If this is the first visit, mark as loaded when component mounts
+    if (!hasLoadedOnce && isLoading) {
+      // Don't do anything, let LoadingScreen handle it
+    }
+  }, [hasLoadedOnce, isLoading]);
 
   const handleLoadingComplete = () => {
     setIsLoading(false);
     setHasLoadedOnce(true);
-    hasSeenLoading = true; // Set module-level flag
+    if (typeof window !== "undefined") {
+      sessionStorage.setItem(LOADING_KEY, "true");
+    }
     setTimeout(() => setShowContent(true), 800);
   };
 

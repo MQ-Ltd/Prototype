@@ -50,6 +50,12 @@ export default function AudioPage() {
     return () => clearTimeout(timer);
   }, []);
 
+  // Animate content on mount
+  useEffect(() => {
+    const timer = setTimeout(() => setShowContent(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
+
   async function start() {
     try {
       setStatus("starting");
