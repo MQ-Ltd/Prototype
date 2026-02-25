@@ -6,7 +6,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
-import { SignedIn, UserButton } from "@clerk/nextjs";
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 export function Navbar() {
   return (
@@ -27,16 +27,21 @@ export function Navbar() {
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-4">
-          <Link href="/login">
-            <Button className="bg-white/10 text-white hover:bg-white/20 font-semibold border border-white/20">
-              Sign in
-            </Button>
+          <Link href="/pricing" className="text-white/60 hover:text-white transition-colors">
+            Pricing
           </Link>
-          <Link href="/signup">
-            <Button className="bg-[#C1e328] text-black hover:bg-[#C1e328]/90 font-semibold">
-              Sign up
-            </Button>
-          </Link>
+          <SignedOut>
+            <Link href="/login">
+              <Button className="bg-white/10 text-white hover:bg-white/20 font-semibold border border-white/20">
+                Sign in
+              </Button>
+            </Link>
+            <Link href="/signup">
+              <Button className="bg-[#C1e328] text-black hover:bg-[#C1e328]/90 font-semibold">
+                Sign up
+              </Button>
+            </Link>
+          </SignedOut>
           <SignedIn>
             <UserButton afterSignOutUrl="/" />
           </SignedIn>
@@ -53,16 +58,23 @@ export function Navbar() {
 
             <SheetContent side="right" className="bg-black p-6 w-64 text-white border-l border-white/10">
               <nav className="flex flex-col space-y-4 mt-6 text-lg">
-                <Link href="/login" className="w-full">
+                <Link href="/pricing" className="w-full">
                   <Button className="w-full bg-white/10 text-white hover:bg-white/20 font-semibold border border-white/20">
-                    Sign in
+                    Pricing
                   </Button>
                 </Link>
-                <Link href="/signup" className="w-full">
-                  <Button className="w-full bg-[#C1e328] text-black hover:bg-[#C1e328]/90 font-semibold">
-                    Sign up
-                  </Button>
-                </Link>
+                <SignedOut>
+                  <Link href="/login" className="w-full">
+                    <Button className="w-full bg-white/10 text-white hover:bg-white/20 font-semibold border border-white/20">
+                      Sign in
+                    </Button>
+                  </Link>
+                  <Link href="/signup" className="w-full">
+                    <Button className="w-full bg-[#C1e328] text-black hover:bg-[#C1e328]/90 font-semibold">
+                      Sign up
+                    </Button>
+                  </Link>
+                </SignedOut>
                 <SignedIn>
                   <UserButton afterSignOutUrl="/" />
                 </SignedIn>
